@@ -58,6 +58,13 @@ export const BLOG_POSTS: BlogPost[] = [
     link: '/blog/cara-nulis-appraisal-review-dari-cupu-ke-level-2',
     uid: 'blog-1',
   },
+  {
+    title: 'Perilaku Keuangan Generasi Z terhadap Kredit & BNPL: Riset, Impulsivitas, dan Dampaknya',
+    description:
+      'Sharing hasil riset tentang perilaku keuangan Generasi Z terhadap kredit dan BNPL, serta dampaknya terhadap keputusan finansial mereka.',
+    link: '/blog/perilaku-keuangan-generasi-z-terhadap-kredit-dan-bnpl',
+    uid: 'blog-2',
+  },
 ]
 
 export const SOCIAL_LINKS: SocialLink[] = [
