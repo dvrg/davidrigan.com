@@ -20,6 +20,34 @@
   }
 }
 
+@media print {
+  @page {
+    size: A4;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Tighten CV section spacing for compact output */
+  #cv-content section {
+    margin-bottom: 1rem;
+  }
+
+  #cv-content h2 {
+    margin-bottom: 0.4rem;
+  }
+
+  #cv-content .mb-4 {
+    margin-bottom: 0.6rem;
+  }
+
+  #cv-content ul {
+    row-gap: 0;
+  }
+}
+
 :root {
   --sh-class: #7aa2f7;
   --sh-sign: #89ddff;

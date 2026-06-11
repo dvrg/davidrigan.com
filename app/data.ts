@@ -80,6 +80,10 @@ export const SOCIAL_LINKS: SocialLink[] = [
     label: 'Instagram',
     link: 'https://www.instagram.com/david.de.rigan',
   },
+  {
+    label: 'CV',
+    link: '/cv/latest',
+  },
 ]
 
 export const EMAIL = 'hi@davidrigan.com'

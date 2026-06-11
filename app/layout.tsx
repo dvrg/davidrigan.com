@@ -21,6 +21,28 @@ export const metadata: Metadata = {
     template: '%s | David Rigan'
   },
   description: 'Software engineer with a background in finance, driven by continuous learning. Passionate about building accessible, impactful products that empower Gen Z.',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://davidrigan.com',
+    siteName: 'David Rigan',
+    title: 'David Rigan - Personal website',
+    description: 'Software engineer with a background in finance, driven by continuous learning. Passionate about building accessible, impactful products that empower Gen Z.',
+    images: [
+      {
+        url: '/cover.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'David Rigan - Personal website',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'David Rigan - Personal website',
+    description: 'Software engineer with a background in finance, driven by continuous learning. Passionate about building accessible, impactful products that empower Gen Z.',
+    images: ['/cover.jpg'],
+  },
 };
 
 const geist = Geist({
@@ -50,7 +72,7 @@ export default function RootLayout({
           defaultTheme="system"
         >
           <div className="flex min-h-screen w-full flex-col font-[family-name:var(--font-inter-tight)]">
-            <div className="relative mx-auto w-full max-w-screen-sm flex-1 px-4 pt-20">
+            <div className="relative mx-auto w-full max-w-screen-sm flex-1 px-4 pt-20 print:px-0 print:pt-0">
               <Header />
               {children}
               <Footer />
