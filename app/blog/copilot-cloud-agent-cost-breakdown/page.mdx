@@ -1,0 +1,128 @@
+export const metadata = {
+title: 'Why Copilot Cloud Agent Dwarfed My Other GitHub Usage Costs',
+date: '2026-07-12',
+authors: [{ name: 'David Rigan', url: 'https://davidrigan.com' }],
+description: 'A real breakdown of one day of GitHub billing showing how Copilot Cloud Agent consumed 8× more credits than Copilot AI usage, Codespaces, and Actions combined.',
+tags: ["GitHub Copilot", "Costs of Github Cloud Agent"],
+alternates: {
+    canonical: '/blog/copilot-cloud-agent-cost-breakdown',
+  },
+};
+
+<Cover
+  src="https://cdn.cosmos.so/ccd579ad-0056-4f44-b3e3-f01fe8cc6a45?format=webp"
+  alt="Robot smooke by MYREFS - from cosmos.so"
+  caption="Robot smooke by MYREFS"
+/>
+
+import { DailyCostChart, ModelUsageChart } from "../../_components/cost-charts";
+
+export const dailyData = [
+  { name: "Actions Linux", amount: 0.61, fill: "#7ee787" },
+  { name: "Codespaces compute", amount: 0.91, fill: "#79c0ff" },
+  { name: "Codespaces storage", amount: 0.01, fill: "#a5d6ff" },
+  { name: "Copilot AI Credits", amount: 1.03, fill: "#d2a8ff" },
+  { name: "Copilot Cloud Agent", amount: 8.64, fill: "#f85149" },
+];
+
+export const modelData = [
+  { name: "Coding Agent model", amount: 12.24 },
+  { name: "Code Review model", amount: 0.92 },
+  { name: "Auto: GPT-5.3-Codex", amount: 0.61 },
+  { name: "Claude Sonnet 4.5", amount: 0.59 },
+  { name: "Claude Haiku 4.5", amount: 0.41 },
+  { name: "Other models", amount: 0.18 },
+];
+
+## The surprise on the bill
+
+I recently audited my GitHub usage for a single day and found something that caught me off guard:
+
+the **Copilot Cloud Agent** line item was larger than everything else on the bill combined — and I usually pick a low-cost model (Kimi).
+
+Here is the raw data from **July 11, 2026**.
+
+## The numbers
+
+| SKU | Units | Price/unit | Gross amount |
+|---|---|---|---|
+| Actions Linux | 101 min | $0.006 | $0.61 |
+| Codespaces compute 2-core | 5.06 hr | $0.18 | $0.91 |
+| Codespaces storage | 0.18 GB-hr | $0.07 | $0.01 |
+| Copilot AI Credits | 103.44 credits | $0.01 | $1.03 |
+| **Copilot Cloud Agent** | **863.9 credits** | **$0.01** | **$8.64** |
+
+**Daily total:** $11.20  
+**Cloud Agent share:** ~77%
+
+Even though both Copilot AI Credits and Copilot Cloud Agent charge the same `$0.01` per credit, the agent consumed **8.4× more credits** than all my other Copilot AI usage that day.
+
+## Daily cost breakdown
+
+Hover over the bars to see exact amounts.
+
+<DailyCostChart data={dailyData} />
+
+## Model usage for the month
+
+The model-level view tells the same story. The **Coding Agent model** bar is an order of magnitude taller than every other category combined.
+
+<ModelUsageChart data={modelData} />
+
+| Model category | Cost (Jul 1–12) |
+|---|---|
+| Coding Agent model | **$12.24** |
+| Code Review model | $0.92 |
+| Auto: GPT-5.3-Codex | $0.61 |
+| Claude Sonnet 4.5 | $0.59 |
+| Claude Haiku 4.5 | $0.41 |
+| Other models | $0.18 |
+
+That is not because I selected an expensive model; it is because the agent layered many model calls into one autonomous session.
+
+## A simple visual comparison
+
+The daily spend in text form:
+
+```text
+Copilot Cloud Agent        $8.64   ████████████████████████████████████████
+Codespaces compute 2-core  $0.91   ████
+Copilot AI Credits         $1.03   █████
+Actions Linux              $0.61   ███
+Codespaces storage         $0.01   ▏
+```
+
+One Cloud Agent day cost roughly as much as running six Codespaces sessions or thirteen Actions workflows.
+
+## Why it costs so much more
+The key insight is that Copilot Cloud Agent is not the same product as Copilot AI Credits.
+
+When you use Ask, Edit, or inline chat, you pay for discrete model calls.
+When you use Cloud Agent, you pay for an autonomous runtime that can:
+
+1. Read and search across many files
+2. Run shell commands and tools
+3. Iterate, reflect, and retry
+4. Keep a large context window alive across multiple turns
+5. Run for up to ~59 minutes per session
+So even with Kimi — a cheap model on a per-token basis — the sheer number of calls and the length of the session add up.
+
+Think of the two SKUs this way:
+| Product |	What you are paying for|
+|---|---|
+|Copilot AI Credits |	Individual model invocations that you trigger directly |
+|Copilot Cloud Agent |	The entire agentic workflow: models plus compute plus tool orchestration|
+
+## Optimization tips
+If you want to keep Cloud Agent useful without letting the bill run away:
+
+1. Scope sessions tightly. Give the agent one concrete task instead of “fix everything in the codebase.”
+2. Limit the working set. Point it to specific files or directories; large context windows multiply input tokens.
+3. Watch long-running tasks. Each Cloud Agent session can run for close to an hour. Cancel early if it is drifting.
+4. Review the model actually used. Check the AI usage dashboard to confirm it is running on the model you selected.
+5. Use direct chat for quick questions. Reserve Cloud Agent for tasks that genuinely require multi-step reasoning and tool use.
+
+## Takeaway
+The price of Copilot Cloud Agent is not driven by the model alone. It is driven by session count, context size, and the number of tool/model interactions inside each run.
+
+If your Cloud Agent bill feels high even with a low-cost model, that is normal: the agent SKU bundles compute, tooling, and repeated model calls into one credit pool. Treat it as a workflow product, not a chat product, and scope sessions accordingly.

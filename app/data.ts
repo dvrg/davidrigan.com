@@ -36,7 +36,7 @@ export const PROJECTS: Project[] = [
     video:
       'https://stream.mux.com/bjyGMebh5nH6r7sJUPvn01Zc9jnoe29HpwmzjcyfeoKM.m3u8',
     id: 'project1',
-  }
+  },
 ]
 
 export const WORK_EXPERIENCE: WorkExperience[] = [
@@ -47,23 +47,31 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     end: 'Present',
     link: 'https://www.linkedin.com/company/kredivo-group',
     id: 'work1',
-  }
+  },
 ]
 
 export const BLOG_POSTS: BlogPost[] = [
+  {
+    title: 'Copilot Cloud Agent Cost Breakdown',
+    description:
+      'Analyzing the cost structure of Copilot Cloud Agent and its implications for cloud budgeting.',
+    link: '/blog/copilot-cloud-agent-cost-breakdown',
+    uid: 'blog-3',
+  },
+  {
+    title:
+      'Perilaku Keuangan Generasi Z terhadap Kredit & BNPL: Riset, Impulsivitas, dan Dampaknya',
+    description:
+      'Sharing hasil riset tentang perilaku keuangan Generasi Z terhadap kredit dan BNPL, serta dampaknya terhadap keputusan finansial mereka.',
+    link: '/blog/perilaku-keuangan-generasi-z-terhadap-kredit-dan-bnpl',
+    uid: 'blog-2',
+  },
   {
     title: 'Cara Jitu Nulis Appraisal Review: Dari Cupu ke Level 2',
     description:
       'Sharing gimana cara nulis appraisal review untuk jadi engineer yang lebih mateng',
     link: '/blog/cara-nulis-appraisal-review-dari-cupu-ke-level-2',
     uid: 'blog-1',
-  },
-  {
-    title: 'Perilaku Keuangan Generasi Z terhadap Kredit & BNPL: Riset, Impulsivitas, dan Dampaknya',
-    description:
-      'Sharing hasil riset tentang perilaku keuangan Generasi Z terhadap kredit dan BNPL, serta dampaknya terhadap keputusan finansial mereka.',
-    link: '/blog/perilaku-keuangan-generasi-z-terhadap-kredit-dan-bnpl',
-    uid: 'blog-2',
   },
 ]
 
