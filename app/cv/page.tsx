@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'CV Archive - David Rigan',
-  description: 'All versions of David Rigan\'s professional CV',
+  description: "All versions of David Rigan's professional CV",
 }
 
 type CVVersion = {
@@ -33,8 +33,12 @@ export default function CVIndexPage() {
     <main>
       <div>
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50">CV Versions</h1>
-          <p className="mt-2 text-zinc-600 dark:text-zinc-400">All published versions of my professional CV.</p>
+          <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50">
+            CV Versions
+          </h1>
+          <p className="mt-2 text-zinc-600 dark:text-zinc-400">
+            All published versions of my professional CV.
+          </p>
         </div>
 
         <div className="flex flex-col space-y-3">
@@ -45,7 +49,9 @@ export default function CVIndexPage() {
               className="group flex items-center justify-between rounded-xl border border-zinc-200 bg-white px-5 py-4 transition-colors hover:border-zinc-400 hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-600 dark:hover:bg-zinc-900"
             >
               <div className="flex items-center gap-3">
-                <span className="font-semibold text-zinc-900 dark:text-zinc-50">{cv.label}</span>
+                <span className="font-semibold text-zinc-900 dark:text-zinc-50">
+                  {cv.label}
+                </span>
                 {cv.isLatest && (
                   <span className="rounded-full bg-zinc-900 px-2.5 py-0.5 text-xs font-medium text-white dark:bg-zinc-100 dark:text-zinc-900">
                     Latest
@@ -53,7 +59,9 @@ export default function CVIndexPage() {
                 )}
               </div>
               <div className="flex items-center gap-4">
-                <span className="hidden text-sm text-zinc-500 dark:text-zinc-400 sm:block">{cv.description}</span>
+                <span className="hidden text-sm text-zinc-500 sm:block dark:text-zinc-400">
+                  {cv.description}
+                </span>
                 <svg
                   width="15"
                   height="15"

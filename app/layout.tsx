@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 import { Header } from './header'
 import { Footer } from './footer'
@@ -14,20 +15,22 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://davidrigan.com/'),
   alternates: {
-    canonical: '/'
+    canonical: '/',
   },
   title: {
     default: 'David Rigan - Personal website',
-    template: '%s | David Rigan'
+    template: '%s | David Rigan',
   },
-  description: 'Software engineer with a background in finance, driven by continuous learning. Passionate about building accessible, impactful products that empower Gen Z.',
+  description:
+    'Software engineer with a background in finance, driven by continuous learning. Passionate about building accessible, impactful products that empower Gen Z.',
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://davidrigan.com',
     siteName: 'David Rigan',
     title: 'David Rigan - Personal website',
-    description: 'Software engineer with a background in finance, driven by continuous learning. Passionate about building accessible, impactful products that empower Gen Z.',
+    description:
+      'Software engineer with a background in finance, driven by continuous learning. Passionate about building accessible, impactful products that empower Gen Z.',
     images: [
       {
         url: '/cover.jpg',
@@ -40,10 +43,11 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'David Rigan - Personal website',
-    description: 'Software engineer with a background in finance, driven by continuous learning. Passionate about building accessible, impactful products that empower Gen Z.',
+    description:
+      'Software engineer with a background in finance, driven by continuous learning. Passionate about building accessible, impactful products that empower Gen Z.',
     images: ['/cover.jpg'],
   },
-};
+}
 
 const geist = Geist({
   variable: '--font-geist',
@@ -79,6 +83,18 @@ export default function RootLayout({
             </div>
           </div>
         </ThemeProvider>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-FCNRVT1F62"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-FCNRVT1F62');
+          `}
+        </Script>
       </body>
     </html>
   )

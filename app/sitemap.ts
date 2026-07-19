@@ -22,6 +22,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${WEBSITE_URL}/blog/copilot-cloud-agent-cost-breakdown`,
+      lastModified: new Date('2026-07-12'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
       url: `${WEBSITE_URL}/cv`,
       lastModified: new Date(),
       changeFrequency: 'monthly',

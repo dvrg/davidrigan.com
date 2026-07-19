@@ -1,184 +1,185 @@
 /* CONFIGURATION STARTS HERE */
 
-  /* Step 1: enter your domain name like fruitionsite.com */
-  const MY_DOMAIN = 'davidrigan.com';
-  
-  /*
-   * Step 2: enter your URL slug to page ID mapping
-   * The key on the left is the slug (without the slash)
-   * The value on the right is the Notion page ID
-   */
-  const SLUG_TO_PAGE = {
-    '': 'c2749c7aa8fb4336b2c77b720eda63dd',
-    'blog': '67d5665f2c7644fda9a84bdeb0c4b963',
-    'portofolio': '590df0550d524fa9930afbc8e3507ca6',
-    'resume': 'cba626427d36456b95bd8652235010c6',
-  };
-  
-  /* Step 3: enter your page title and description for SEO purposes */
-  const PAGE_TITLE = 'David Rigan';
-  const PAGE_DESCRIPTION = 'Less is more, welcome to my simple website with more insight inside.';
-  
-  /* Step 4: enter a Google Font name, you can choose from https://fonts.google.com */
-  const GOOGLE_FONT = '';
-  
-  /* Step 5: enter any custom scripts you'd like */
-  const CUSTOM_SCRIPT = ``;
-  
-  /* CONFIGURATION ENDS HERE */
-  
-  const PAGE_TO_SLUG = {};
-const slugs = [];
-const pages = [];
-Object.keys(SLUG_TO_PAGE).forEach(slug => {
-  const page = SLUG_TO_PAGE[slug];
-  slugs.push(slug);
-  pages.push(page);
-  PAGE_TO_SLUG[page] = slug;
-});
+/* Step 1: enter your domain name like fruitionsite.com */
+const MY_DOMAIN = 'davidrigan.com'
 
-addEventListener("fetch", event => {
-  event.respondWith(fetchAndApply(event.request));
-});
+/*
+ * Step 2: enter your URL slug to page ID mapping
+ * The key on the left is the slug (without the slash)
+ * The value on the right is the Notion page ID
+ */
+const SLUG_TO_PAGE = {
+  '': 'c2749c7aa8fb4336b2c77b720eda63dd',
+  blog: '67d5665f2c7644fda9a84bdeb0c4b963',
+  portofolio: '590df0550d524fa9930afbc8e3507ca6',
+  resume: 'cba626427d36456b95bd8652235010c6',
+}
+
+/* Step 3: enter your page title and description for SEO purposes */
+const PAGE_TITLE = 'David Rigan'
+const PAGE_DESCRIPTION =
+  'Less is more, welcome to my simple website with more insight inside.'
+
+/* Step 4: enter a Google Font name, you can choose from https://fonts.google.com */
+const GOOGLE_FONT = ''
+
+/* Step 5: enter any custom scripts you'd like */
+const CUSTOM_SCRIPT = ``
+
+/* CONFIGURATION ENDS HERE */
+
+const PAGE_TO_SLUG = {}
+const slugs = []
+const pages = []
+Object.keys(SLUG_TO_PAGE).forEach((slug) => {
+  const page = SLUG_TO_PAGE[slug]
+  slugs.push(slug)
+  pages.push(page)
+  PAGE_TO_SLUG[page] = slug
+})
+
+addEventListener('fetch', (event) => {
+  event.respondWith(fetchAndApply(event.request))
+})
 
 function generateSitemap() {
-  let sitemap = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+  let sitemap = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
   slugs.forEach(
     (slug) =>
       (sitemap +=
-        "<url><loc>https://" + MY_DOMAIN + "/" + slug + "</loc></url>")
-  );
-  sitemap += "</urlset>";
-  return sitemap;
+        '<url><loc>https://' + MY_DOMAIN + '/' + slug + '</loc></url>'),
+  )
+  sitemap += '</urlset>'
+  return sitemap
 }
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, HEAD, POST, PUT, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type"
-};
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, HEAD, POST, PUT, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+}
 
 function handleOptions(request) {
   if (
-    request.headers.get("Origin") !== null &&
-    request.headers.get("Access-Control-Request-Method") !== null &&
-    request.headers.get("Access-Control-Request-Headers") !== null
+    request.headers.get('Origin') !== null &&
+    request.headers.get('Access-Control-Request-Method') !== null &&
+    request.headers.get('Access-Control-Request-Headers') !== null
   ) {
     // Handle CORS pre-flight request.
     return new Response(null, {
-      headers: corsHeaders
-    });
+      headers: corsHeaders,
+    })
   } else {
     // Handle standard OPTIONS request.
     return new Response(null, {
       headers: {
-        Allow: "GET, HEAD, POST, PUT, OPTIONS"
-      }
-    });
+        Allow: 'GET, HEAD, POST, PUT, OPTIONS',
+      },
+    })
   }
 }
 
 async function fetchAndApply(request) {
-  if (request.method === "OPTIONS") {
-    return handleOptions(request);
+  if (request.method === 'OPTIONS') {
+    return handleOptions(request)
   }
-  let url = new URL(request.url);
-  url.hostname = 'www.notion.so';
-  if (url.pathname === "/robots.txt") {
-    return new Response("Sitemap: https://" + MY_DOMAIN + "/sitemap.xml");
+  let url = new URL(request.url)
+  url.hostname = 'www.notion.so'
+  if (url.pathname === '/robots.txt') {
+    return new Response('Sitemap: https://' + MY_DOMAIN + '/sitemap.xml')
   }
-  if (url.pathname === "/sitemap.xml") {
-    let response = new Response(generateSitemap());
-    response.headers.set("content-type", "application/xml");
-    return response;
+  if (url.pathname === '/sitemap.xml') {
+    let response = new Response(generateSitemap())
+    response.headers.set('content-type', 'application/xml')
+    return response
   }
-  let response;
-  if (url.pathname.startsWith("/app") && url.pathname.endsWith("js")) {
-    response = await fetch(url.toString());
-    let body = await response.text();
+  let response
+  if (url.pathname.startsWith('/app') && url.pathname.endsWith('js')) {
+    response = await fetch(url.toString())
+    let body = await response.text()
     response = new Response(
       body
         .replace(/www.notion.so/g, MY_DOMAIN)
         .replace(/notion.so/g, MY_DOMAIN),
-      response
-    );
-    response.headers.set("Content-Type", "application/x-javascript");
-    return response;
-  } else if (url.pathname.startsWith("/api")) {
+      response,
+    )
+    response.headers.set('Content-Type', 'application/x-javascript')
+    return response
+  } else if (url.pathname.startsWith('/api')) {
     // Forward API
     response = await fetch(url.toString(), {
       body: request.body,
       headers: {
-        "content-type": "application/json;charset=UTF-8",
-        "user-agent":
-          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36"
+        'content-type': 'application/json;charset=UTF-8',
+        'user-agent':
+          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36',
       },
-      method: "POST"
-    });
-    response = new Response(response.body, response);
-    response.headers.set("Access-Control-Allow-Origin", "*");
-    return response;
+      method: 'POST',
+    })
+    response = new Response(response.body, response)
+    response.headers.set('Access-Control-Allow-Origin', '*')
+    return response
   } else if (slugs.indexOf(url.pathname.slice(1)) > -1) {
-    const pageId = SLUG_TO_PAGE[url.pathname.slice(1)];
-    return Response.redirect("https://" + MY_DOMAIN + "/" + pageId, 301);
+    const pageId = SLUG_TO_PAGE[url.pathname.slice(1)]
+    return Response.redirect('https://' + MY_DOMAIN + '/' + pageId, 301)
   } else {
     response = await fetch(url.toString(), {
       body: request.body,
       headers: request.headers,
-      method: request.method
-    });
-    response = new Response(response.body, response);
-    response.headers.delete("Content-Security-Policy");
-    response.headers.delete("X-Content-Security-Policy");
+      method: request.method,
+    })
+    response = new Response(response.body, response)
+    response.headers.delete('Content-Security-Policy')
+    response.headers.delete('X-Content-Security-Policy')
   }
 
-  return appendJavascript(response, SLUG_TO_PAGE);
+  return appendJavascript(response, SLUG_TO_PAGE)
 }
 
 class MetaRewriter {
   element(element) {
-    if (PAGE_TITLE !== "") {
+    if (PAGE_TITLE !== '') {
       if (
-        element.getAttribute("property") === "og:title" ||
-        element.getAttribute("name") === "twitter:title"
+        element.getAttribute('property') === 'og:title' ||
+        element.getAttribute('name') === 'twitter:title'
       ) {
-        element.setAttribute("content", PAGE_TITLE);
+        element.setAttribute('content', PAGE_TITLE)
       }
-      if (element.tagName === "title") {
-        element.setInnerContent(PAGE_TITLE);
+      if (element.tagName === 'title') {
+        element.setInnerContent(PAGE_TITLE)
       }
     }
-    if (PAGE_DESCRIPTION !== "") {
+    if (PAGE_DESCRIPTION !== '') {
       if (
-        element.getAttribute("name") === "description" ||
-        element.getAttribute("property") === "og:description" ||
-        element.getAttribute("name") === "twitter:description"
+        element.getAttribute('name') === 'description' ||
+        element.getAttribute('property') === 'og:description' ||
+        element.getAttribute('name') === 'twitter:description'
       ) {
-        element.setAttribute("content", PAGE_DESCRIPTION);
+        element.setAttribute('content', PAGE_DESCRIPTION)
       }
     }
     if (
-      element.getAttribute("property") === "og:url" ||
-      element.getAttribute("name") === "twitter:url"
+      element.getAttribute('property') === 'og:url' ||
+      element.getAttribute('name') === 'twitter:url'
     ) {
-      element.setAttribute("content", MY_DOMAIN);
+      element.setAttribute('content', MY_DOMAIN)
     }
-    if (element.getAttribute("name") === "apple-itunes-app") {
-      element.remove();
+    if (element.getAttribute('name') === 'apple-itunes-app') {
+      element.remove()
     }
   }
 }
 
 class HeadRewriter {
   element(element) {
-    if (GOOGLE_FONT !== "") {
+    if (GOOGLE_FONT !== '') {
       element.append(
         `<link href='https://fonts.googleapis.com/css?family=${GOOGLE_FONT.replace(' ', '+')}:Regular,Bold,Italic&display=swap' rel='stylesheet'>
         <style>* { font-family: "${GOOGLE_FONT}" !important; }</style>`,
         {
-          html: true
-        }
-      );
+          html: true,
+        },
+      )
     }
     element.append(
       `<style>
@@ -192,15 +193,15 @@ class HeadRewriter {
       div.notion-topbar-mobile > div:nth-child(1n).toggle-mode { display: block !important; }
       </style>`,
       {
-        html: true
-      }
-    );
+        html: true,
+      },
+    )
   }
 }
 
 class BodyRewriter {
   constructor(SLUG_TO_PAGE) {
-    this.SLUG_TO_PAGE = SLUG_TO_PAGE;
+    this.SLUG_TO_PAGE = SLUG_TO_PAGE
   }
   element(element) {
     element.append(
@@ -301,17 +302,17 @@ class BodyRewriter {
       };
     </script>${CUSTOM_SCRIPT}`,
       {
-        html: true
-      }
-    );
+        html: true,
+      },
+    )
   }
 }
 
 async function appendJavascript(res, SLUG_TO_PAGE) {
   return new HTMLRewriter()
-    .on("title", new MetaRewriter())
-    .on("meta", new MetaRewriter())
-    .on("head", new HeadRewriter())
-    .on("body", new BodyRewriter(SLUG_TO_PAGE))
-    .transform(res);
+    .on('title', new MetaRewriter())
+    .on('meta', new MetaRewriter())
+    .on('head', new HeadRewriter())
+    .on('body', new BodyRewriter(SLUG_TO_PAGE))
+    .transform(res)
 }
